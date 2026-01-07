@@ -1,3 +1,17 @@
+.PHONY: tests build
+
+tests:
+	clang tests/utils.c \
+		-D_POSIX_C_SOURCE=199309L \
+		tests/test_vec3.c src/vec3.c \
+		-std=c99 -Wall -Werror -fsanitize=address -g \
+		-Iinclude \
+		-o build/test_vec3
+
 build:
-	gcc main.c -o main -lX11 -lGL -lXrandr -lXcursor -lXi
-	# gcc main.c -o main -lX11 -lGL -lXrandr 
+	clang src/main.c src/glad.c src/shader.c src/arena.c \
+		-std=c99 -Wall -Werror -fsanitize=address -g \
+		-Iinclude \
+		-Iexternal \
+		-lGL -lX11 -lXrandr -lXcursor -lXi \
+		-o build/main
