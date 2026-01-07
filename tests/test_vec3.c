@@ -118,6 +118,63 @@ void test_vec3_sub_mix(void)
   jo_test_print_ok(&test);
 }
 
+void test_vec3_mul(void)
+{
+  vec3_t a = vec3(5.0f, 5.0f, 5.0f);
+  vec3_t b = vec3(2.0f, 2.0f, 2.0f);
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_mul");
+
+  vec3_t result = vec3_mul(a, b);
+
+  jo_test_time_stop(&test);
+
+  assert(result.x == 10.0f);
+  assert(result.y == 10.0f);
+  assert(result.z == 10.0f);
+
+  jo_test_print_ok(&test);
+}
+
+void test_vec3_mul_negative(void)
+{
+  vec3_t a = vec3(-5.0f, -5.0f, -5.0f);
+  vec3_t b = vec3(2.0f, 2.0f, 2.0f);
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_mul_negative");
+
+  vec3_t result = vec3_mul(a, b);
+
+  jo_test_time_stop(&test);
+
+  assert(result.x == -10.0f);
+  assert(result.y == -10.0f);
+  assert(result.z == -10.0f);
+
+  jo_test_print_ok(&test);
+}
+
+void test_vec3_mul_mix(void)
+{
+  vec3_t a = vec3(2.0f, 7.5f, 40.0f);
+  vec3_t b = vec3(2.0f, 3.0f, 0.5f);
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_mul_mix");
+
+  vec3_t result = vec3_mul(a, b);
+
+  jo_test_time_stop(&test);
+
+  assert(result.x == 4.0f);
+  assert(result.y == 22.5f);
+  assert(result.z == 20.0f);
+
+  jo_test_print_ok(&test);
+}
+
 int main(void)
 {
   printf("\nRunning vec3 tests\n\n");
@@ -131,6 +188,12 @@ int main(void)
   test_vec3_sub();
   test_vec3_sub_negative();
   test_vec3_sub_mix();
+
+  printf("\n");
+
+  test_vec3_mul();
+  test_vec3_mul_negative();
+  test_vec3_mul_mix();
 
   printf("\nAll tests passed!\n");
   return 0;
