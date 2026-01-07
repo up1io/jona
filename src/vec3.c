@@ -134,7 +134,7 @@ vec3_t vec3_cross(const vec3_t a, const vec3_t b) {
   vec3_t out;
   out.x = a.y * b.z - a.z * b.y;
   out.y = a.z * b.x - a.x * b.z;
-  out.z = a.x * b.y - a.y * a.x;
+  out.z = a.x * b.y - a.y * b.x;
 
   assert(IS_VALID_VEC3(out));
   return out;

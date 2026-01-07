@@ -343,6 +343,180 @@ void test_vec3_negate_mix(void)
   jo_test_print_ok(&test);
 }
 
+void test_vec3_dot(void)
+{
+  vec3_t a = vec3(2.0f, 2.0f, 2.0f);
+  vec3_t b = vec3(2.0f, 2.0f, 2.0f);
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_dot");
+
+  float64_t result = vec3_dot(a, b);
+
+  jo_test_time_stop(&test);
+
+  assert(result == 12.0f);
+
+  jo_test_print_ok(&test);
+}
+
+void test_vec3_dot_negative(void)
+{
+  vec3_t a = vec3(-2.0f, -2.0f, -2.0f);
+  vec3_t b = vec3(5.0f, 5.0f, 5.0f);
+  
+  test_t test;
+  jo_test_init(&test, "test_vec3_dot_negative");
+
+  float64_t result = vec3_dot(a, b);
+
+  jo_test_time_stop(&test);
+
+  assert(result == -30.0f);
+
+  jo_test_print_ok(&test);
+}
+
+void test_vec3_dot_mix(void)
+{
+  vec3_t a = vec3(5.0f, 10.0f, -2.0f);
+  vec3_t b = vec3(2.0f, -1.5f, -2.0f);
+  
+  test_t test;
+  jo_test_init(&test, "test_vec3_dot_mix");
+
+  float64_t result = vec3_dot(a, b);
+
+  jo_test_time_stop(&test);
+
+  assert(result == -1.0f);
+
+  jo_test_print_ok(&test);
+}
+
+void test_vec3_cross(void)
+{
+  vec3_t a = vec3(10.0f, 5.0f, 15.0f);
+  vec3_t b = vec3(5.0f, 2.0f, 3.0f);
+
+  // x = 5 * 3 - 15 * 2 = 15 - 30 = -15
+  // y = 15 * 5 - 10 * 3 = 75 - 30 = 45
+  // z = 10 * 2 - 5 * 5 = 20 - 25 = -5
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_cross");
+
+  vec3_t result = vec3_cross(a, b);
+
+  jo_test_time_stop(&test);
+
+  assert(result.x == -15.0f);
+  assert(result.y == 45.0f);
+  assert(result.z == -5.0f);
+
+  jo_test_print_ok(&test);
+}
+
+void test_vec3_cross_negative(void)
+{
+  vec3_t a = vec3(-50.0f, -2.5f, -15.0f);
+  vec3_t b = vec3(-2.0f, -3.0f, -18.0f);
+
+  // x = -2.5 * (-18) - (-15) * (-3) = 45 - 45 = 0
+  // y = -15 * (-2) - (-50) * (-18) = 30 - 900 = -870
+  // z = -50 * (-3) - (-2.5) * (-2) = 150 - 5 = 145
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_cross_negativ");
+
+  vec3_t result = vec3_cross(a, b);
+
+  jo_test_time_stop(&test);
+
+  assert(result.x == -0.0f);
+  assert(result.y == -870.0f);
+  assert(result.z == 145.0f);
+
+  jo_test_print_ok(&test);
+}
+
+void test_vec3_cross_mix(void)
+{
+  vec3_t a = vec3(5.0f, 12.0f, 2.0f);
+  vec3_t b = vec3(7.5f, -3.0f, 8.0f);
+
+  // x = 12 * 8 - 2 * (-3) = 96 - (-6) = 102
+  // y = 2 * 7.5 - 5 * 8 = (-25) - 40 = -25 
+  // z = 5 * (-3) - 12 * 7.5 = -15 - 90 = -105 
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_cross_mix");
+
+  vec3_t result = vec3_cross(a, b);
+
+  jo_test_time_stop(&test);
+
+  assert(result.x == 102.0f);
+  assert(result.y == -25.0f);
+  assert(result.z == -105.0f);
+
+  jo_test_print_ok(&test);
+}
+
+void test_vec3_length_squared(void)
+{
+  vec3_t v = vec3(1.0f, 2.0f, 3.0f);
+
+  // len = 1 * 1 + 2 * 2 + 3 * 3 = 14
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_length_squared");
+
+  float32_t result = vec3_length_squared(v);
+
+  jo_test_time_stop(&test);
+
+  assert(result == 14.0f);
+
+  jo_test_print_ok(&test);
+}
+
+void test_vec3_length_squared_negative(void)
+{
+  vec3_t v = vec3(-5.0f, -2.0f, -3.0f);
+
+  // len = -5 * (-5) + (-2) * (-2) + (-3) * (-3) = 38
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_length_squared");
+
+  float32_t result = vec3_length_squared(v);
+
+  jo_test_time_stop(&test);
+
+  assert(result == 38.0f);
+
+  jo_test_print_ok(&test);
+}
+
+void test_vec3_length_squared_mix(void)
+{
+  vec3_t v = vec3(20.0f, -2.0f, 3.5f);
+
+  // len = 20 * 20) + (-2) * (-2) + 3.5 * 3.5 = 416.25
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_length_squared");
+
+  float32_t result = vec3_length_squared(v);
+
+  jo_test_time_stop(&test);
+
+  assert(result == 416.25f);
+
+  jo_test_print_ok(&test);
+}
+
 int main(void)
 {
   printf("\nRunning vec3 tests\n\n");
@@ -380,6 +554,24 @@ int main(void)
   test_vec3_negate();
   test_vec3_negate_negative();
   test_vec3_negate_mix();
+
+  printf("\n");
+
+  test_vec3_dot();
+  test_vec3_dot_negative();
+  test_vec3_dot_mix();
+
+  printf("\n");
+
+  test_vec3_cross();
+  test_vec3_cross_negative();
+  test_vec3_cross_mix();
+
+  printf("\n");
+
+  test_vec3_length_squared();
+  test_vec3_length_squared_negative();
+  test_vec3_length_squared_mix();
 
   printf("\nAll tests passed!\n");
   return 0;
