@@ -560,7 +560,7 @@ void test_vec3_length_mix()
   vec3_t v = vec3(7.5f, -3.0f, 13.0f);
 
   // len_sq = 7.5 * 7.5 + (-3) * (-3) + 13 * 13 = 234.25 
-  // len = sqrt(234.25) = 15.3049011758 
+  // len = sqrt(234.25) = 15.305227865 
 
   test_t test;
   jo_test_init(&test, "test_vec3_length_mix");
@@ -569,7 +569,7 @@ void test_vec3_length_mix()
 
   jo_test_time_stop(&test);
 
-  assert(result == 15.3049011758f);
+  assert(result == 15.305227865f);
 
   jo_test_print_ok(&test);
 }
