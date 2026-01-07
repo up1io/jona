@@ -517,6 +517,63 @@ void test_vec3_length_squared_mix(void)
   jo_test_print_ok(&test);
 }
 
+void test_vec3_length(void)
+{
+  vec3_t v = vec3(1.0f, 1.0f, 1.0f);
+
+  // len_sq = 1 * 1 + 1 * 1 + 1 * 1 = 3
+  // len = sqrt(3) = 1.73205080757
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_length");
+
+  float32_t result = vec3_length(v);
+
+  jo_test_time_stop(&test);
+
+  assert(result == 1.7320508075f);
+
+  jo_test_print_ok(&test);
+}
+
+void test_vec3_length_negative(void)
+{
+  vec3_t v = vec3(-5.0f, -2.0f, -3.0f);
+
+  // len_sq = -5 * (-5) + (-2) * (-2) + (-3) * (-3) = 38
+  // len = sqrt(38) = 6.16441400297
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_length_negative");
+
+  float32_t result = vec3_length(v);
+
+  jo_test_time_stop(&test);
+
+  assert(result == 6.16441400297f);
+
+  jo_test_print_ok(&test);
+}
+
+void test_vec3_length_mix()
+{
+  vec3_t v = vec3(7.5f, -3.0f, 13.0f);
+
+  // len_sq = 7.5 * 7.5 + (-3) * (-3) + 13 * 13 = 234.25 
+  // len = sqrt(234.25) = 15.3049011758 
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_length_mix");
+
+  float32_t result = vec3_length(v);
+
+  jo_test_time_stop(&test);
+
+  assert(result == 15.3049011758f);
+
+  jo_test_print_ok(&test);
+}
+
 int main(void)
 {
   printf("\nRunning vec3 tests\n\n");
@@ -572,6 +629,12 @@ int main(void)
   test_vec3_length_squared();
   test_vec3_length_squared_negative();
   test_vec3_length_squared_mix();
+
+  printf("\n");
+
+  test_vec3_length();
+  test_vec3_length_negative();
+  test_vec3_length_mix();
 
   printf("\nAll tests passed!\n");
   return 0;
