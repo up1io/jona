@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "modeller/math/vec3.h"
 #include "test/utils.h"
@@ -517,6 +518,7 @@ void test_vec3_length_squared_mix(void)
   jo_test_print_ok(&test);
 }
 
+// Todo(john): investiagte why this take so long
 void test_vec3_length(void)
 {
   vec3_t v = vec3(1.0f, 1.0f, 1.0f);
@@ -570,6 +572,87 @@ void test_vec3_length_mix()
   jo_test_time_stop(&test);
 
   assert(result == 15.305227865f);
+
+  jo_test_print_ok(&test);
+}
+
+void test_vec3_normalize(void)
+{
+  vec3_t v = vec3(2.0f, 2.0f, 2.0f);
+
+  // len_sq = 2 * 2 + 2 * 2 + 2 * 2 = 12
+  // len = sqrt(12) = 3.46410161514
+  // x = 2 / 3.4641016151 = 0.57735026919
+  // y = 2 / 3.4641016151 = 0.57735026919
+  // z = 2 / 3.4641016151 = 0.57735026919
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_normalize");
+
+  vec3_t result = vec3_normalize(v);
+
+  jo_test_time_stop(&test);
+  
+  float32_t expectedValue = 0.57735026919f;
+ 
+  assert(fabs(result.x - expectedValue) < FLOAT32_EPSILON);
+  assert(fabs(result.y - expectedValue) < FLOAT32_EPSILON);
+  assert(fabs(result.z - expectedValue) < FLOAT32_EPSILON);
+
+  jo_test_print_ok(&test);
+}
+
+void test_vec3_normalize_negative(void)
+{
+  vec3_t v = vec3(-5.0f, -5.0f, -5.0f);
+
+  // len_sq = -5 * (-5) + (-5) * (-5) + (-5) * (-5) =  75
+  // len = sqrt(75) = 8.66025403784
+  // len = 1 / 8.66025403784 = 0.11547005383
+  // x = -5 / 8.66025403784 = -0.57735026919
+  // y = -5 / 8.66025403784 = -0.57735026919
+  // z = -5 / 8.66025403784 = -0.57735026919
+ 
+  test_t test;
+  jo_test_init(&test, "test_vec3_normalize_negative");
+
+  vec3_t result = vec3_normalize(v);
+
+  jo_test_time_stop(&test);
+
+  float32_t expectedValue = -0.57735026919f;
+
+  assert(fabs(result.x - expectedValue) < FLOAT32_EPSILON);
+  assert(fabs(result.y - expectedValue) < FLOAT32_EPSILON);
+  assert(fabs(result.z - expectedValue) < FLOAT32_EPSILON);
+
+  jo_test_print_ok(&test);
+}
+
+void test_vec3_normalize_mix(void)
+{
+  vec3_t v = vec3(7.5f, -2.5f, 45.0f);
+
+  // len_sq = 7.5 * 7.5 + (-2.5) * (-2.5) + 45 * 45 = 2087.5 
+  // len = sqrt(2087.5) = 45.6891672062
+  // x = 7.5 / 45.6891672062 = 0.16415269655
+  // y = -2.5 / 45.6891672062 = -0.05471756551  
+  // z = 45 / 45.6891672062 = 0.98491617929
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_normalize_mix");
+
+  vec3_t result = vec3_normalize(v);
+
+  jo_test_time_stop(&test);
+
+  float32_t expected_x_value = 0.16415269655;
+  float32_t expected_y_value = -0.05471756551;
+  float32_t expected_z_value = 0.98491617929;
+
+  assert(fabs(result.x - expected_x_value) < FLOAT32_EPSILON);
+  assert(fabs(result.y - expected_y_value) < FLOAT32_EPSILON);
+  assert(fabs(result.z - expected_z_value) < FLOAT32_EPSILON);
 
   jo_test_print_ok(&test);
 }
@@ -635,6 +718,12 @@ int main(void)
   test_vec3_length();
   test_vec3_length_negative();
   test_vec3_length_mix();
+
+  printf("\n");
+
+  test_vec3_normalize();
+  test_vec3_normalize_negative();
+  test_vec3_normalize_mix();
 
   printf("\nAll tests passed!\n");
   return 0;
