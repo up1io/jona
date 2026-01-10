@@ -657,6 +657,39 @@ void test_vec3_normalize_mix(void)
   jo_test_print_ok(&test);
 }
 
+void test_vec3_normalize_safe(void)
+{
+  vec3_t v = vec3_zero(); 
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_normalize_safe");
+
+  vec3_t result = vec3_normalize_safe(v);
+
+  jo_test_time_stop(&test);
+  
+  assert(result.x == 0);
+  assert(result.y == 0);
+  assert(result.y == 0);
+
+  jo_test_print_ok(&test);
+}
+
+void test_vec3_distance_squared(void)
+{
+  vec3_t a = vec3(1.0f, 1.0f, 1.0f);
+  vec3_t b = vec3(2.0f, 2.0f, 2.0f);
+
+  test_t test;
+  jo_test_init(&test, "test_vec3_distance_squared");
+
+  float32_t result = vec3_distance_squared(a, b);
+
+  jo_test_time_stop(&test);
+
+  printf("result %f\n", result);
+}
+
 int main(void)
 {
   printf("\nRunning vec3 tests\n\n");
@@ -724,6 +757,14 @@ int main(void)
   test_vec3_normalize();
   test_vec3_normalize_negative();
   test_vec3_normalize_mix();
+
+  printf("\n");
+
+  test_vec3_normalize_safe();
+
+  printf("\n");
+
+  test_vec3_distance_squared();
 
   printf("\nAll tests passed!\n");
   return 0;
