@@ -1,6 +1,7 @@
 #define _POSIX_C_SOURCE 199309L
 
 #include "jona/app.h"
+#include "jona/platform.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -9,6 +10,8 @@
 
 struct jo_app_t {
   jo_app_config_t config;
+
+  jo_platform_t *platform;
 
   int is_running;
   struct timespec last_frame_time;
@@ -24,6 +27,22 @@ jo_app_t *jo_app_create(const jo_app_config_t *config)
   app->config = *config;
   app->is_running = 0;
 
+  const char *title;
+  switch (config->title) {
+    case JO_APP_TITLE_MAIN:
+      title = "JONA";
+      break;
+    case JO_APP_TITLE_COUNT:
+    default:
+      title = "Default";
+      break;
+  }
+
+  jo_platform_t *platform = jo_platform_create(title, config->window_width, config->window_height);
+  assert(platform != NULL);
+
+  app->platform = platform;
+
   // TODO(john): add here the creations of the modules
 
   clock_gettime(CLOCK_MONOTONIC, &app->last_frame_time);
@@ -34,6 +53,10 @@ jo_app_t *jo_app_create(const jo_app_config_t *config)
 void jo_app_destroy(jo_app_t *app)
 {
   assert(app != NULL);
+
+  if (app->platform) {
+    jo_platform_destroy(app->platform);
+  }
 
   free(app);
 }
@@ -68,20 +91,29 @@ jo_app_status jo_app_run(jo_app_t *app)
 
   app->is_running = 1;
 
-  float64_t shutdownTimer = 0;
   while(app->is_running) {
     float64_t delta = jo_app_get_delta_time(app);
 
-    if (shutdownTimer > 10) {
-      app->is_running = 0;
-    }
+    jo_platform_poll_events(app->platform);
 
-    shutdownTimer += delta;
-    printf("Time: %f\n", shutdownTimer);
+    jo_platform_event_t evt;
+    while(jo_platform_get_event(app->platform, &evt)) {
+      switch(evt.type) {
+        case JO_PLATFORM_EVENT_QUIT:
+          printf("Close event\n");
+          app->is_running = 0;
+          break;
+        default:
+          printf("event %d\n", evt.type);
+          break;
+      }
+    }
 
     if (app->config.callbacks.on_update) {
-      app->config.callbacks.on_update(app);
+      app->config.callbacks.on_update(app, delta);
     }
+
+    jo_platform_swap_buffers(app->platform);
   }
 
   if (app->config.callbacks.on_shutdown) {

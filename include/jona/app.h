@@ -18,7 +18,7 @@ typedef struct jo_app_t jo_app_t;
 
 typedef struct {
   void (*on_init)(jo_app_t *app);
-  void (*on_update)(jo_app_t *app);
+  void (*on_update)(jo_app_t *app, uint64_t delta_time_ns);
   void (*on_render)(jo_app_t *app);
   void (*on_shutdown)(jo_app_t *app);
 } jo_app_callbacks_t;

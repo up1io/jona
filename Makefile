@@ -9,7 +9,7 @@ tests:
 		-o build/test_vec3
 
 build:
-	clang src/main.c src/app.c external/glad/glad.c src/renderer/shader.c src/arena.c \
+	clang src/main.c src/app.c src/platform/platform_rgfw.c external/glad/glad.c src/renderer/shader.c src/arena.c \
 		-std=c99 -Wall -Werror -fsanitize=address -g \
 		-Iinclude \
 		-Iexternal \
