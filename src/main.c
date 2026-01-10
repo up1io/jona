@@ -5,13 +5,13 @@
 #define RGFW_IMPLEMENTATION
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "stb/stb_image.h"
 
 #define CLAY_IMPLEMENTATION
 #include <clay/clay.h>
 
-#include "RGFW.h"
-#include "shader.h"
+#include "RGFW/RGFW.h"
+#include "jona/shader.h"
 #include "jona/arena.h"
 #include <cglm/cglm.h>
 
