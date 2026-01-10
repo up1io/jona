@@ -1,7 +1,7 @@
 #ifndef TEST_UTILS_H
 #define TEST_UTILS_H
 
-#include "modeller/types.h"
+#include "jona/types.h"
 #include "test/utils.h"
 
 #include <time.h>

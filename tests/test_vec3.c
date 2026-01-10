@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "modeller/math/vec3.h"
+#include "jona/math/vec3.h"
 #include "test/utils.h"
 
 void test_vec3_add(void) 

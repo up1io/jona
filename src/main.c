@@ -12,7 +12,7 @@
 
 #include "RGFW.h"
 #include "shader.h"
-#include "modeller/arena.h"
+#include "jona/arena.h"
 #include <cglm/cglm.h>
 
 #ifdef RGFW_MACOS

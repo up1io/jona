@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "modeller/arena.h"
+#include "jona/arena.h"
 
 void arena_init(arena_t *arena, size_t size)
 {

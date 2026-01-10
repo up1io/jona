@@ -1,7 +1,7 @@
 #ifndef MODELLER_VEC3_H
 #define MODELLER_VEC3_H
 
-#include"modeller/types.h"
+#include "jona/types.h"
 
 typedef struct {
   float32_t x;
